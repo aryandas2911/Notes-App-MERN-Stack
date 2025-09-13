@@ -13,8 +13,10 @@ const Signup = () => {
         "http://localhost:5000/api/auth/register",
         { name, email, password }
       );
-      
-    } catch (error) {}
+      console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
   };
 
   return (
