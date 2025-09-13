@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,7 +11,7 @@ const Signup = () => {
     try {
       const reponse = await axios.post(
         "http://localhost:5000/api/auth/register",
-        { name, email, password }
+        { email, password }
       );
       console.log(response.data);
     } catch (error) {
@@ -22,21 +22,8 @@ const Signup = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="border border-gray-200 shadow p-6 w-80 bg-white">
-        <h2 className="text-2xl font-bold mb-4">Signup</h2>
+        <h2 className="text-2xl font-bold mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter Username"
-              required
-              className="w-full px-3 py-2 border border-gray-300"
-            />
-          </div>
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700">
               Email
@@ -64,10 +51,10 @@ const Signup = () => {
             />
           </div>
           <button type="submit" className="w-full bg-teal-600 text-white py-2">
-            Signup
+            Login
           </button>
           <p className="text-center mt-2">
-            Already Have an Account? <Link to="/login">Login</Link>
+            Don't Have an Account? <Link to="/register">Register</Link>
           </p>
         </form>
       </div>
