@@ -11,7 +11,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const reponse = await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api/auth/register",
         { name, email, password }
       );
@@ -67,7 +67,7 @@ const Signup = () => {
               className="w-full px-3 py-2 border border-gray-300"
             />
           </div>
-          <button type="submit" className="w-full bg-teal-600 text-white py-2">
+          <button type="submit" className="w-full bg-teal-600 text-white py-2 cursor-pointer">
             Signup
           </button>
           <p className="text-center mt-2">

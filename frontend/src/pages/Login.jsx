@@ -10,12 +10,12 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const reponse = await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api/auth/login",
         { email, password }
       );
-      if (reponse.data.success){
-        
+      if (response.data.success){
+        localStorage.setItem("token", response.data.token)
         navigate("/")
       }
     } catch (error) {
@@ -54,7 +54,7 @@ const Signup = () => {
               className="w-full px-3 py-2 border border-gray-300"
             />
           </div>
-          <button type="submit" className="w-full bg-teal-600 text-white py-2">
+          <button type="submit" className="w-full bg-teal-600 text-white py-2 cursor-pointer">
             Login
           </button>
           <p className="text-center mt-2">
