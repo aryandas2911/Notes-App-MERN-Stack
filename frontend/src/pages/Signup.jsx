@@ -6,7 +6,7 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,11 +15,11 @@ const Signup = () => {
         "http://localhost:5000/api/auth/register",
         { name, email, password }
       );
-      if (response.data.success){
-        navigate("/")
+      if (response.data.success) {
+        navigate("/");
       }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -67,7 +67,10 @@ const Signup = () => {
               className="w-full px-3 py-2 border border-gray-300"
             />
           </div>
-          <button type="submit" className="w-full bg-teal-600 text-white py-2 cursor-pointer">
+          <button
+            type="submit"
+            className="w-full bg-teal-600 text-white py-2 cursor-pointer"
+          >
             Signup
           </button>
           <p className="text-center mt-2">

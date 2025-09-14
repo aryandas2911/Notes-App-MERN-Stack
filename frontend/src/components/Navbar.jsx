@@ -17,7 +17,10 @@ const Navbar = () => {
       <div>
         {!user ? (
           <>
-            <Link to="/login" className="bg-blue-500 px-4 py-2 rounded mr-4 cursor-pointer">
+            <Link
+              to="/login"
+              className="bg-blue-500 px-4 py-2 rounded mr-4 cursor-pointer"
+            >
               Login
             </Link>
             <Link
@@ -30,7 +33,9 @@ const Navbar = () => {
         ) : (
           <>
             <span className="mr-4">{user.name}</span>
-            <button className="bg-red-500 px-4 py-2 rounded cursor-pointer">Logout</button>
+            <button className="bg-red-500 px-4 py-2 rounded cursor-pointer">
+              Logout
+            </button>
           </>
         )}
       </div>
