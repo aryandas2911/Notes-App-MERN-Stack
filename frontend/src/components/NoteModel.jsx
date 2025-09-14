@@ -9,9 +9,9 @@ const NoteModel = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h2>Add New Note</h2>
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-8 rounded">
+        <h2 className="text-xl font-bold mb-4">Add New Note</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -20,12 +20,19 @@ const NoteModel = () => {
               setTitle(e.target.value);
             }}
             placeholder="Note title"
+            className="border border-gray-300 p-2 w-full mb-4"
           />
-          <textarea value={description} onChange={(e)=>setDescription(e.target.value)}
-            placeholder="Note description"></textarea>
-            <button type="submit">Add Note</button>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Note description"
+            className="border border-gray-300 p-2 w-full mb-4"
+          ></textarea>
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            Add Note
+          </button>
         </form>
-        <button>Cancel</button>
+        <button className="mt-4 text-red-500">Cancel</button>
       </div>
     </div>
   );
