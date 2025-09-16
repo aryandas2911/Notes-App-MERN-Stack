@@ -1,0 +1,35 @@
+import express from "express";
+
+const router = express.Router();
+
+router.post("/add", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "User already exists" });
+    }
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashPassword,
+    });
+
+    await newUser.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Account created successfully" });
+  } catch (error) {
+    console.log(error.message);
+    return res
+      .status(500)
+      .json({ success: false, message: "Error in adding user" });
+  }
+});
+
+export default router;
