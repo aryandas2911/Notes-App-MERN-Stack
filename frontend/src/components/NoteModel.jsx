@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-const NoteModel = () => {
+const NoteModel = ({ closeModel, addNote }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    addNote(title, description);
   };
 
   return (
@@ -28,11 +29,19 @@ const NoteModel = () => {
             placeholder="Note description"
             className="border border-gray-300 p-2 w-full mb-4"
           ></textarea>
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
             Add Note
           </button>
         </form>
-        <button className="mt-4 text-red-500">Cancel</button>
+        <button
+          className="mt-4 text-red-500 cursor-pointer"
+          onClick={closeModel}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

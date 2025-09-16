@@ -4,6 +4,25 @@ import NoteModel from "../components/NoteModel";
 
 const Home = () => {
   const [isModelOpen, setModelOpen] = useState(false);
+
+  const closeModel = () => {
+    setModelOpen(false);
+  };
+
+  const addNote = async (title, description) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/note/add", {
+        title,
+        description,
+      });
+      if (response.data.success) {
+        closeModel();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -15,7 +34,7 @@ const Home = () => {
       >
         +
       </button>
-      {isModelOpen && <NoteModel />}
+      {isModelOpen && <NoteModel closeModel={closeModel} addNote={addNote} />}
     </div>
   );
 };
