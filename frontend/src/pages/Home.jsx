@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import NoteModel from "../components/NoteModel";
-import axios from "axios"
+import axios from "axios";
 
 const Home = () => {
   const [isModelOpen, setModelOpen] = useState(false);
@@ -12,15 +12,22 @@ const Home = () => {
 
   const addNote = async (title, description) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/note/add", {
-        title,
-        description,
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/api/note/add",
+        { title, description },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       if (response.data.success) {
         closeModel();
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response?.data || error.message);
     }
   };
 

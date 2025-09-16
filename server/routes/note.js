@@ -1,5 +1,6 @@
 import express from "express";
 import Note from "../models/Note.js";
+import middleware from "../middleware/middleware.js";
 
 const router = express.Router();
 
@@ -7,18 +8,11 @@ router.post("/add", middleware, async (req, res) => {
   try {
     const { title, description } = req.body;
 
-    const newNote = new Note(
-      {
-        title,
-        description,
-        userId: req.user.id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const newNote = new Note({
+      title,
+      description,
+      userId: req.user.id,
+    });
 
     await newNote.save();
 
