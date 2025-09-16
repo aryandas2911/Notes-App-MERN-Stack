@@ -1,34 +1,35 @@
 import express from "express";
+import Note from "../models/Note.js";
 
 const router = express.Router();
 
-router.post("/add", async (req, res) => {
+router.post("/add", middleware, async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (user) {
-      return res
-        .status(401)
-        .json({ success: false, message: "User already exists" });
-    }
-    const hashPassword = await bcrypt.hash(password, 10);
+    const { title, description } = req.body;
 
-    const newUser = new User({
-      name,
-      email,
-      password: hashPassword,
-    });
+    const newNote = new Note(
+      {
+        title,
+        description,
+        userId: req.user.id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
 
-    await newUser.save();
+    await newNote.save();
 
     return res
       .status(200)
-      .json({ success: true, message: "Account created successfully" });
+      .json({ success: true, message: "Note created successfully" });
   } catch (error) {
     console.log(error.message);
     return res
       .status(500)
-      .json({ success: false, message: "Error in adding user" });
+      .json({ success: false, message: "Error in adding note" });
   }
 });
 
