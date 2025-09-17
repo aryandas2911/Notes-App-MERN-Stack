@@ -54,10 +54,28 @@ const Home = () => {
     }
   };
 
+  const deleteNote = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/note/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        fetchNotes();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const editNote = async (id, title, description) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/note/add/${id}`,
+        `http://localhost:5000/api/note/${id}`,
         { title, description },
         {
           headers: {
@@ -80,12 +98,15 @@ const Home = () => {
 
       <div className="px-8 pt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         {notes.map((note) => {
-          return <NoteCard note={note} onEdit={onEdit} />;
+          return (
+            <NoteCard note={note} onEdit={onEdit} deleteNote={deleteNote} />
+          );
         })}
       </div>
 
       <button
         onClick={() => {
+          setCurrentNote(null);
           setModelOpen(true);
         }}
         className="fixed right-4 bottom-4 bg-teal-500 text-white text-2xl font-bold p-4 rounded-full cursor-pointer"

@@ -38,18 +38,26 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.put("/:id",async(req,res)=>{
+router.put("/:id", async (req, res) => {
   try {
-    const {id}=req.params
-    const updateNote= await Note.findByIdAndUpdate(id,req.body)
-    return res
-      .status(200)
-      .json({ success: true, message: updateNote });
+    const { id } = req.params;
+    const updateNote = await Note.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    return res.status(200).json({ success: true, updateNote });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ success: true, message: "Cant update note" });
+    return res.status(500).json({ success: true, message: "Cant update note" });
   }
-})
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateNote = await Note.findByIdAndDelete(id);
+    return res.status(200).json({ success: true, updateNote });
+  } catch (error) {
+    return res.status(500).json({ success: true, message: "Cant delete note" });
+  }
+});
 
 export default router;
