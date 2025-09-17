@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/ContextProvider";
 
 const Navbar = ({setQuery}) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
   return (
     <nav className="bg-gray-800 p-4 text-white flex justify-between items-center">
       <div className="text-xl font-bold">
@@ -34,7 +35,7 @@ const Navbar = ({setQuery}) => {
         ) : (
           <>
             <span className="mr-4">{user.name}</span>
-            <button className="bg-red-500 px-4 py-2 rounded cursor-pointer">
+            <button className="bg-red-500 px-4 py-2 rounded cursor-pointer" onClick={logout}>
               Logout
             </button>
           </>

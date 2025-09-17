@@ -4,8 +4,10 @@ import NoteModel from "../components/NoteModel";
 import axios from "axios";
 import { useEffect } from "react";
 import NoteCard from "../components/NoteCard";
+import { useAuth } from "../context/ContextProvider";
 
 const Home = () => {
+  const { user } = useAuth(); 
   const [isModelOpen, setModelOpen] = useState(false);
   const [filteredNotes, setFilteredNote] = useState([]);
   const [notes, setNotes] = useState([]);
@@ -13,8 +15,13 @@ const Home = () => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    if (user) {
+      fetchNotes();
+    } else {
+      setNotes([]);
+      setFilteredNote([]);
+    }
+  }, [user]);
 
   useEffect(() => {
     setFilteredNote(
@@ -28,7 +35,11 @@ const Home = () => {
 
   const fetchNotes = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/note");
+      const { data } = await axios.get("http://localhost:5000/api/note", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       setNotes(data.notes);
     } catch (error) {
       console.log(error);
@@ -109,11 +120,15 @@ const Home = () => {
       <Navbar setQuery={setQuery} />
 
       <div className="px-8 pt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {filteredNotes.length > 0? filteredNotes.map((note) => {
-          return (
-            <NoteCard note={note} onEdit={onEdit} deleteNote={deleteNote} />
-          );
-        }): <p>No Notes</p>}
+        {filteredNotes.length > 0 ? (
+          filteredNotes.map((note) => {
+            return (
+              <NoteCard note={note} onEdit={onEdit} deleteNote={deleteNote} />
+            );
+          })
+        ) : (
+          <p>No Notes</p>
+        )}
       </div>
 
       <button
