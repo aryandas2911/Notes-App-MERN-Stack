@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -16,10 +17,15 @@ const Signup = () => {
         { name, email, password }
       );
       if (response.data.success) {
+        toast.success("Account created successfully 🎉");
         navigate("/");
+      }
+      else{
+        toast.error("Signup failed ❌");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Error signing up ❌");
     }
   };
 

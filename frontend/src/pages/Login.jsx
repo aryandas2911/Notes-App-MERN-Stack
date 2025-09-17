@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/ContextProvider";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -19,10 +20,15 @@ const Signup = () => {
       if (response.data.success) {
         login(response.data.user);
         localStorage.setItem("token", response.data.token);
+        toast.success("Login successful 🎉");
         navigate("/");
+      }
+      else{
+        toast.error("Error logging in ❌");
       }
     } catch (error) {
       console.log(error);
+      toast.error("Error logging in ❌");
     }
   };
 

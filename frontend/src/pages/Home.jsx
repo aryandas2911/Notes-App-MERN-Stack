@@ -5,9 +5,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import NoteCard from "../components/NoteCard";
 import { useAuth } from "../context/ContextProvider";
+import { toast } from "react-toastify";
 
 const Home = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const [isModelOpen, setModelOpen] = useState(false);
   const [filteredNotes, setFilteredNote] = useState([]);
   const [notes, setNotes] = useState([]);
@@ -71,9 +72,11 @@ const Home = () => {
       if (response.data.success) {
         fetchNotes();
         closeModel();
+        toast.success("Note created");
       }
     } catch (error) {
       console.log(error.response?.data || error.message);
+      toast.success("Error adding note");
     }
   };
 
@@ -88,10 +91,12 @@ const Home = () => {
         }
       );
       if (response.data.success) {
+        toast.success("Note deleted");
         fetchNotes();
       }
     } catch (error) {
       console.log(error);
+      toast.success("Note cannot be deleted");
     }
   };
 
@@ -109,9 +114,11 @@ const Home = () => {
       if (response.data.success) {
         fetchNotes();
         closeModel();
+        toast.success("Note edited successfully");
       }
     } catch (error) {
       console.log(error);
+      toast.success("Note cannot be edited");
     }
   };
 

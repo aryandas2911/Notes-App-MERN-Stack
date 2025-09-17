@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import {toast} from "react-toastify"
 
 const authContext = createContext();
 
@@ -11,6 +12,7 @@ const ContextProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
+    toast.success("Logged out successfully ✅");
   };
 
   useEffect(() => {
